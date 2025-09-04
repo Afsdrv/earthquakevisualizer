@@ -52,6 +52,14 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				magnitude: {
+					minor: 'hsl(var(--magnitude-minor))',
+					light: 'hsl(var(--magnitude-light))',
+					moderate: 'hsl(var(--magnitude-moderate))',
+					strong: 'hsl(var(--magnitude-strong))',
+					major: 'hsl(var(--magnitude-major))',
+					great: 'hsl(var(--magnitude-great))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

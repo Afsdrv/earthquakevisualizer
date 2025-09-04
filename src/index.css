@@ -2,41 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Earthquake Visualizer Design System
+All colors MUST be HSL for seismic data visualization.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 13% 8%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 13% 10%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 13% 10%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 220 13% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 13% 15%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 13% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 142 71% 45%;
+    --accent-foreground: 220 13% 8%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 20%;
+    --input: 220 13% 15%;
+    --ring: 142 71% 45%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Earthquake magnitude colors */
+    --magnitude-minor: 142 71% 45%;     /* Green - Minor earthquakes */
+    --magnitude-light: 60 100% 50%;     /* Yellow - Light earthquakes */
+    --magnitude-moderate: 30 100% 50%;  /* Orange - Moderate earthquakes */
+    --magnitude-strong: 15 100% 50%;    /* Red-orange - Strong earthquakes */
+    --magnitude-major: 0 100% 50%;      /* Red - Major earthquakes */
+    --magnitude-great: 300 100% 25%;    /* Dark red - Great earthquakes */
+
+    /* Gradients */
+    --gradient-seismic: linear-gradient(135deg, hsl(var(--magnitude-minor)), hsl(var(--magnitude-moderate)));
+    --gradient-background: linear-gradient(135deg, hsl(220 13% 6%), hsl(220 13% 12%));
+    
+    /* Shadows and effects */
+    --shadow-earthquake: 0 4px 20px hsl(var(--accent) / 0.3);
+    --glow-seismic: 0 0 20px hsl(var(--accent) / 0.5);
 
     --sidebar-background: 0 0% 98%;
 
@@ -55,42 +71,12 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
   }
 }
 
@@ -100,6 +86,28 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    background: linear-gradient(135deg, hsl(220 13% 6%), hsl(220 13% 12%));
+    min-height: 100vh;
   }
+
+  .earthquake-marker {
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .earthquake-marker:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+
+  .magnitude-0 { background-color: hsl(var(--magnitude-minor)); }
+  .magnitude-1 { background-color: hsl(var(--magnitude-minor)); }
+  .magnitude-2 { background-color: hsl(var(--magnitude-light)); }
+  .magnitude-3 { background-color: hsl(var(--magnitude-moderate)); }
+  .magnitude-4 { background-color: hsl(var(--magnitude-strong)); }
+  .magnitude-5 { background-color: hsl(var(--magnitude-major)); }
+  .magnitude-6 { background-color: hsl(var(--magnitude-great)); }
 }
